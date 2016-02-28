@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'ALDataRequestView_Example', :exclusive => true do
+  pod 'ALDataRequestView', :path => '../'
+end
+
+target 'ALDataRequestView_Tests', :exclusive => true do
+  pod 'ALDataRequestView', :path => '../'
+
+  pod 'FBSnapshotTestCase'
+end
