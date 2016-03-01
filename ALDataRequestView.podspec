@@ -7,34 +7,47 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "ALDataRequestView"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of ALDataRequestView."
+s.name             = "ALDataRequestView"
+s.version          = "0.1.0"
+s.summary          = "A short description of ALDataRequestView."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
-  s.description      = <<-DESC
-                       DESC
+#   * Finally, don't worry about the indent, CocoaPods strips it!
+s.description      = <<-DESC
+DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/ALDataRequestView"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
-  s.license          = 'MIT'
-  s.author           = { "Antoine van der Lee" => "a.vanderlee@triple-it.nl" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/ALDataRequestView.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+s.homepage         = "https://github.com/<GITHUB_USERNAME>/ALDataRequestView"
+# s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+s.license          = 'MIT'
+s.author           = { "Antoine van der Lee" => "a.vanderlee@triple-it.nl" }
+s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/ALDataRequestView.git", :tag => s.version.to_s }
+# s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.platform     = :ios, '8.0'
-  s.requires_arc = true
+s.platform     = :ios, '8.0'
+s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'ALDataRequestView' => ['Pod/Assets/*.png']
-  }
+s.default_subspec = "Core"
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+s.subspec "Core" do |ss|
+ss.source_files  = "Source/*.swift"
+ss.dependency "PureLayout"
+ss.framework  = "Foundation"
+end
+
+# s.subspec "RxSwift" do |ss|
+#   ss.source_files = "Source/RxSwift/*.swift"
+#   ss.dependency "Moya/RxSwift"
+#   ss.dependency "Moya-SwiftyJSONMapper/Core"
+#   ss.dependency "RxSwift", "~> 2.0.0"
+# end
+
+s.subspec "ReactiveCocoa" do |ss|
+ss.source_files = "Source/ReactiveCocoa/*.swift"
+ss.dependency "ReactiveCocoa"
+ss.dependency "PureLayout"
+ss.dependency "ALDataRequestView/Core"
+end
 end

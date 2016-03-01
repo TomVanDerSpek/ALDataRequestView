@@ -1,0 +1,38 @@
+PODS:
+  - ALDataRequestView (0.1.0):
+    - ALDataRequestView/Core (= 0.1.0)
+  - ALDataRequestView/Core (0.1.0):
+    - PureLayout
+  - ALDataRequestView/ReactiveCocoa (0.1.0):
+    - ALDataRequestView/Core
+    - PureLayout
+    - ReactiveCocoa
+  - PureLayout (3.0.1)
+  - ReactiveCocoa (4.0.1):
+    - ReactiveCocoa/UI (= 4.0.1)
+    - Result (~> 1.0.2)
+  - ReactiveCocoa/Core (4.0.1):
+    - ReactiveCocoa/no-arc
+    - Result (~> 1.0.2)
+  - ReactiveCocoa/no-arc (4.0.1):
+    - Result (~> 1.0.2)
+  - ReactiveCocoa/UI (4.0.1):
+    - ReactiveCocoa/Core
+    - Result (~> 1.0.2)
+  - Result (1.0.2)
+
+DEPENDENCIES:
+  - ALDataRequestView (from `../`)
+  - ALDataRequestView/ReactiveCocoa (from `../`)
+
+EXTERNAL SOURCES:
+  ALDataRequestView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ALDataRequestView: 6d0672ea6c37ecff58a07c726f0d728274c46263
+  PureLayout: 3776d602389d93977b4a4431f1b5cb0e0eed2524
+  ReactiveCocoa: f7011630aee4deeb16352fcb1b50d6bde9db4f90
+  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
+
+COCOAPODS: 0.39.0

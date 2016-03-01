@@ -2,11 +2,11 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'ALDataRequestView_Example', :exclusive => true do
-  pod 'ALDataRequestView', :path => '../'
+    pod 'ALDataRequestView', :path => '../'
+    pod 'ALDataRequestView/ReactiveCocoa', :path => '../'
 end
 
 target 'ALDataRequestView_Tests', :exclusive => true do
   pod 'ALDataRequestView', :path => '../'
-
-  pod 'FBSnapshotTestCase'
+  pod 'ALDataRequestView/ReactiveCocoa', :path => '../'
 end
