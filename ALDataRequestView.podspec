@@ -34,6 +34,7 @@ s.default_subspec = "Core"
 s.subspec "Core" do |ss|
 ss.source_files  = "Source/*.swift"
 ss.dependency "PureLayout"
+ss.dependency "ReachabilitySwift"
 ss.framework  = "Foundation"
 end
 

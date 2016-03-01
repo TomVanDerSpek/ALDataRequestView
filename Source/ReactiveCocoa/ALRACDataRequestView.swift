@@ -15,9 +15,7 @@ public extension SignalProducerType {
             dataRequestView.changeRequestState(.Loading)
             }, failed: { (error) in
                 dataRequestView.changeRequestState(.Failed)
-            }, completed: {
-                
-        }) { (object) in
+            }) { (object) in
             if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
                 dataRequestView.changeRequestState(.Empty)
             } else if let arrayObject = object as? NSArray where arrayObject.count == 0 {
