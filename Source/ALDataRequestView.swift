@@ -35,9 +35,16 @@ public protocol ALDataReloadType {
 }
 
 public protocol ALDataRequestViewDataSource : class {
-    func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView
-    func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType
-    func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView
+    func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
+    func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType?
+    func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
+}
+
+// Make methods optional with default implementations
+public extension ALDataRequestViewDataSource {
+    func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? { return nil }
+    func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType? { return nil }
+    func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? { return nil }
 }
 
 public class ALDataRequestView: UIView {
@@ -79,6 +86,13 @@ public class ALDataRequestView: UIView {
     }
     
     internal func setup(){
+        // Hide by default
+        hidden = true
+        
+        // Background color is not needed
+        backgroundColor = UIColor.clearColor()
+        
+        // Setup for automatic retrying
         initOnForegroundObserver()
         initReachabilityMonitoring()
     }
@@ -101,12 +115,10 @@ public class ALDataRequestView: UIView {
         case .Loading:
             resetToPossibleState()
             showLoadingView()
-            hidden = false
             break
         case .Failed:
             resetToPossibleState()
             showReloadView()
-            hidden = false
             break
         case .Success:
             resetToPossibleState()
@@ -115,7 +127,6 @@ public class ALDataRequestView: UIView {
         case .Empty:
             resetToPossibleState()
             showEmptyView()
-            hidden = false
             break
         }
     }
@@ -135,7 +146,7 @@ public class ALDataRequestView: UIView {
             debugLog("No loading view provided!")
             return
         }
-        
+        hidden = false
         loadingView = dataSourceLoadingView
         addSubview(loadingView!)
         loadingView?.autoPinEdgesToSuperviewEdges()
@@ -159,7 +170,7 @@ public class ALDataRequestView: UIView {
             debugLog("Could not determine reloadView")
             return
         }
-        
+        hidden = false
         addSubview(reloadView)
         reloadView.autoPinEdgesToSuperviewEdges()
         dataSourceReloadType.setupForReloadType(ReloadReason.GeneralError)
@@ -173,7 +184,7 @@ public class ALDataRequestView: UIView {
             debugLog("No loading view provided!")
             return
         }
-        
+        hidden = false
         emptyView = dataSourceEmptyView
         addSubview(emptyView!)
         emptyView?.autoPinEdgesToSuperviewEdges()
