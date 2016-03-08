@@ -3,11 +3,13 @@ PODS:
     - ALDataRequestView/Core (= 0.1.0)
   - ALDataRequestView/Core (0.1.0):
     - PureLayout
+    - ReachabilitySwift
   - ALDataRequestView/ReactiveCocoa (0.1.0):
     - ALDataRequestView/Core
     - PureLayout
     - ReactiveCocoa
   - PureLayout (3.0.1)
+  - ReachabilitySwift (2.3.3)
   - ReactiveCocoa (4.0.1):
     - ReactiveCocoa/UI (= 4.0.1)
     - Result (~> 1.0.2)
@@ -30,8 +32,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  ALDataRequestView: 6d0672ea6c37ecff58a07c726f0d728274c46263
+  ALDataRequestView: 6b7aa12b80cfe8806a7c056b6c078ff0a3196a68
   PureLayout: 3776d602389d93977b4a4431f1b5cb0e0eed2524
+  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   ReactiveCocoa: f7011630aee4deeb16352fcb1b50d6bde9db4f90
   Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
 

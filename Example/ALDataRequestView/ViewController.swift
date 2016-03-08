@@ -30,18 +30,22 @@ class ViewController: UIViewController {
         
         
         
-        testWithFailureCallSignalProducer()
+//        testWithFailureCallSignalProducer()
+    }
+    
+    deinit {
+        print("Deinit vc")
     }
     
     func testWithEmptySignalProducer(){
         signalProducer = SignalProducer(signal: signal).attachToDataRequestView(dataRequestView!)
         signalProducer?.start()
         
-        delay(3.0) {
+        delay(3.0, closure: { [weak self] () -> Void in
             let emptyArray:[String] = []
-            self.subscriber.sendNext(emptyArray) // Send empty array
-            self.subscriber.sendCompleted()
-        }
+            self?.subscriber.sendNext(emptyArray) // Send empty array
+            self?.subscriber.sendCompleted()
+        })
     }
     
     func testWithFailureCallSignalProducer(){

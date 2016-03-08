@@ -50,7 +50,7 @@ public extension ALDataRequestViewDataSource {
 public class ALDataRequestView: UIView {
 
     // Public properties
-    public var dataSource:ALDataRequestViewDataSource?
+    public weak var dataSource:ALDataRequestViewDataSource?
     
     /// Action for retrying a failed situation
     /// Will be triggered by the retry button, on foreground or when reachability changed to connected
@@ -95,10 +95,13 @@ public class ALDataRequestView: UIView {
         // Setup for automatic retrying
         initOnForegroundObserver()
         initReachabilityMonitoring()
+        
+        print("Init DataRequestView")
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        print("Deinit DataRequestView")
     }
     
     // MARK: Public Methods
@@ -235,7 +238,7 @@ private extension ALDataRequestView {
             return
         }
         
-        reachability?.whenReachable = { reachability in
+        reachability?.whenReachable = { [unowned self] reachability in
             guard self.automaticallyRetryWhenReachable == true else {
                 return
             }
