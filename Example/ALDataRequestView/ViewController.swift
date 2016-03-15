@@ -66,18 +66,7 @@ class ViewController: UIViewController {
     
     func testWithFailureCallObservable(){
         let URLRequest = NSURLRequest(URL: NSURL(string: "http://httpbin.org/status/400")!)
-        
         rxDisposable = NSURLSession.sharedSession().rx_data(URLRequest).attachToDataRequestView(dataRequestView!).subscribe()
-        
-//            .rac_dataWithRequest(URLRequest)
-//            .flatMap(.Latest, transform: { (data, response) -> SignalProducer<NSData, NSError> in
-//                if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode > 299 {
-//                    return SignalProducer(error: NSError(domain: "", code: httpResponse.statusCode, userInfo: nil))
-//                }
-//                return SignalProducer(value: data)
-//            })
-//            .attachToDataRequestView(dataRequestView!)
-//        dataSignalProducer?.start()
     }
 
     @IBAction func setLoadingButtonTapped(sender: UIButton) {
