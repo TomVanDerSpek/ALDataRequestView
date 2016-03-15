@@ -9,14 +9,16 @@
 import UIKit
 import ALDataRequestView
 import PureLayout
-
+import RxSwift
 import ReactiveCocoa
+import RxCocoa
 
 class ViewController: UIViewController {
 
     var dataRequestView:ALDataRequestView?
     var signalProducer:SignalProducer<[String], NSError>?
     var dataSignalProducer:SignalProducer<NSData, NSError>?
+    var rxDisposable:RxSwift.Disposable?
     let (signal, subscriber) = Signal<[String], NSError>.pipe()
     
     override func viewDidLoad() {
@@ -29,7 +31,7 @@ class ViewController: UIViewController {
         view.sendSubviewToBack(dataRequestView!)
         
         
-        
+        testWithFailureCallObservable()
 //        testWithFailureCallSignalProducer()
     }
     
@@ -61,6 +63,22 @@ class ViewController: UIViewController {
             .attachToDataRequestView(dataRequestView!)
         dataSignalProducer?.start()
     }
+    
+    func testWithFailureCallObservable(){
+        let URLRequest = NSURLRequest(URL: NSURL(string: "http://httpbin.org/status/400")!)
+        
+        rxDisposable = NSURLSession.sharedSession().rx_data(URLRequest).attachToDataRequestView(dataRequestView!).subscribe()
+        
+//            .rac_dataWithRequest(URLRequest)
+//            .flatMap(.Latest, transform: { (data, response) -> SignalProducer<NSData, NSError> in
+//                if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode > 299 {
+//                    return SignalProducer(error: NSError(domain: "", code: httpResponse.statusCode, userInfo: nil))
+//                }
+//                return SignalProducer(value: data)
+//            })
+//            .attachToDataRequestView(dataRequestView!)
+//        dataSignalProducer?.start()
+    }
 
     @IBAction func setLoadingButtonTapped(sender: UIButton) {
         dataRequestView?.changeRequestState(RequestState.Loading)
@@ -91,7 +109,7 @@ extension ViewController : ALDataRequestViewDataSource {
         return loadingView
     }
     
-    func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType {
+    func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType? {
         let reloadVC = ReloadViewController()
         return reloadVC
     }

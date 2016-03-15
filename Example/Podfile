@@ -4,9 +4,12 @@ use_frameworks!
 target 'ALDataRequestView_Example', :exclusive => true do
     pod 'ALDataRequestView', :path => '../'
     pod 'ALDataRequestView/ReactiveCocoa', :path => '../'
+    pod 'ALDataRequestView/RxSwift', :path => '../'
+    pod 'RxCocoa'
 end
 
 target 'ALDataRequestView_Tests', :exclusive => true do
   pod 'ALDataRequestView', :path => '../'
   pod 'ALDataRequestView/ReactiveCocoa', :path => '../'
+  pod 'ALDataRequestView/RxSwift', :path => '../'
 end
