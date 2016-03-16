@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
     s.subspec "RxSwift" do |ss|
         ss.source_files = "Source/RxSwift/*.swift"
         ss.dependency "RxSwift", "~> 2.0.0"
+        ss.dependency "RxCocoa", "~> 2.0.0"
         ss.dependency "ALDataRequestView/Core"
     end
 

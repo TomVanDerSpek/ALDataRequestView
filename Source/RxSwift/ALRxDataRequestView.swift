@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 public extension ObservableType {
     func attachToDataRequestView(dataRequestView:ALDataRequestView) -> Observable<E> {
@@ -24,7 +25,7 @@ public extension ObservableType {
         })
         
         dataRequestView.retryAction = { () -> Void in
-            observable.subscribe()
+            _ = observable.takeUntil(dataRequestView.rx_deallocated).subscribe()
         }
         
         return observable
