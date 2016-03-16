@@ -11,12 +11,7 @@ import RxSwift
 
 public extension ObservableType {
     func attachToDataRequestView(dataRequestView:ALDataRequestView) -> Observable<E> {
-        let observable = self.filter({ (_) -> Bool in
-            dataRequestView.changeRequestState(.Loading)
-            return true
-        })
-            .observeOn(MainScheduler.instance)
-            .doOn(onNext: { (object) in
+        let observable = self.observeOn(MainScheduler.instance).doOn(onNext: { (object) in
             if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
                 dataRequestView.changeRequestState(.Empty)
             } else if let arrayObject = object as? NSArray where arrayObject.count == 0 {
