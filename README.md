@@ -65,7 +65,7 @@ pod "ALDataRequestView"
 
 ## Author
 
-Antoine van der Lee, a.vanderlee@triple-it.nl
+Antoine van der Lee, info@avanderlee.com
 
 ## License
 
