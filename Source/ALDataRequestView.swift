@@ -184,7 +184,7 @@ public class ALDataRequestView: UIView {
     /// This will show the empty view
     internal func showEmptyView(){
         guard let dataSourceEmptyView = dataSource?.emptyViewForDataRequestView(self) else {
-            debugLog("No loading view provided!")
+            debugLog("No empty view provided!")
             return
         }
         hidden = false
