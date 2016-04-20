@@ -96,7 +96,7 @@ public class ALDataRequestView: UIView {
         initOnForegroundObserver()
         initReachabilityMonitoring()
         
-        print("Init DataRequestView")
+//        print("Init DataRequestView")
     }
     
     deinit {
@@ -151,8 +151,12 @@ public class ALDataRequestView: UIView {
         }
         hidden = false
         loadingView = dataSourceLoadingView
-        addSubview(loadingView!)
-        loadingView?.autoPinEdgesToSuperviewEdges()
+        
+        // Only add if not yet added
+        if loadingView?.superview == nil {
+            addSubview(loadingView!)
+            loadingView?.autoPinEdgesToSuperviewEdges()
+        }
     }
     
     /// This will show the reload view
