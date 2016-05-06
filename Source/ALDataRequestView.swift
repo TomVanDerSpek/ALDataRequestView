@@ -156,6 +156,7 @@ public class ALDataRequestView: UIView {
         if loadingView?.superview == nil {
             addSubview(loadingView!)
             loadingView?.autoPinEdgesToSuperviewEdges()
+            layoutIfNeeded()
         }
     }
     
