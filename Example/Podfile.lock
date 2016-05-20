@@ -9,22 +9,23 @@ PODS:
     - ReactiveCocoa
   - ALDataRequestView/RxSwift (1.0.0):
     - ALDataRequestView/Core
+    - RxCocoa (~> 2.0.0)
     - RxSwift (~> 2.0.0)
   - PureLayout (3.0.1)
   - ReachabilitySwift (2.3.3)
-  - ReactiveCocoa (4.0.1):
-    - ReactiveCocoa/UI (= 4.0.1)
-    - Result (~> 1.0.2)
-  - ReactiveCocoa/Core (4.0.1):
+  - ReactiveCocoa (4.1.0):
+    - ReactiveCocoa/UI (= 4.1.0)
+    - Result (~> 2.0)
+  - ReactiveCocoa/Core (4.1.0):
     - ReactiveCocoa/no-arc
-    - Result (~> 1.0.2)
-  - ReactiveCocoa/no-arc (4.0.1):
-    - Result (~> 1.0.2)
-  - ReactiveCocoa/UI (4.0.1):
+    - Result (~> 2.0)
+  - ReactiveCocoa/no-arc (4.1.0):
+    - Result (~> 2.0)
+  - ReactiveCocoa/UI (4.1.0):
     - ReactiveCocoa/Core
-    - Result (~> 1.0.2)
-  - Result (1.0.2)
-  - RxCocoa (2.1.0):
+    - Result (~> 2.0)
+  - Result (2.0.0)
+  - RxCocoa (2.0.0):
     - RxSwift (~> 2.0)
   - RxSwift (2.0.0)
 
@@ -32,19 +33,19 @@ DEPENDENCIES:
   - ALDataRequestView (from `../`)
   - ALDataRequestView/ReactiveCocoa (from `../`)
   - ALDataRequestView/RxSwift (from `../`)
-  - RxCocoa
+  - RxCocoa (~> 2.0.0)
 
 EXTERNAL SOURCES:
   ALDataRequestView:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  ALDataRequestView: a6f653faeeeecece67635a9759ecc20bb3330a59
-  PureLayout: 3776d602389d93977b4a4431f1b5cb0e0eed2524
+  ALDataRequestView: 912decbf4da74123b01762db331bfb040f24eb09
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
-  ReactiveCocoa: f7011630aee4deeb16352fcb1b50d6bde9db4f90
-  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
-  RxCocoa: 79b5feb8378545336e756a0a33fcf5e95050b71c
+  ReactiveCocoa: d70004d7a366a7b8e87e60ce2347182c77701949
+  Result: 9e75e1111c774c6ac594e14907b15057053a7959
+  RxCocoa: b0ebd70b4f7450bdb3c8987b122f8fd568dc1e2f
   RxSwift: d83246efa6f16c50c143bec134649d045498f601
 
 COCOAPODS: 0.39.0
