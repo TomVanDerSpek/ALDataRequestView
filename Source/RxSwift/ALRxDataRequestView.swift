@@ -12,20 +12,22 @@ import RxCocoa
 
 public extension ObservableType {
     func attachToDataRequestView(dataRequestView:ALDataRequestView) -> Observable<E> {
-        let observable = self.observeOn(MainScheduler.instance).doOn(onNext: { (object) in
+        let observable = self.observeOn(MainScheduler.instance).doOn(onNext: { [weak dataRequestView] (object) in
             if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
-                dataRequestView.changeRequestState(.Empty)
+                dataRequestView?.changeRequestState(.Empty)
             } else if let arrayObject = object as? NSArray where arrayObject.count == 0 {
-                dataRequestView.changeRequestState(.Empty)
+                dataRequestView?.changeRequestState(.Empty)
             } else {
-                dataRequestView.changeRequestState(.Success)
+                dataRequestView?.changeRequestState(.Success)
             }
-        }, onError: { (_) in
-            dataRequestView.changeRequestState(.Failed)
+        }, onError: { [weak dataRequestView] (_) in
+            dataRequestView?.changeRequestState(.Failed)
         })
         
-        dataRequestView.retryAction = { () -> Void in
-            _ = observable.takeUntil(dataRequestView.rx_deallocated).subscribe()
+        dataRequestView.retryAction = { [weak dataRequestView] () -> Void in
+            if let dataRequestView = dataRequestView {
+                _ = observable.takeUntil(dataRequestView.rx_deallocated).subscribe()
+            }
         }
         
         return observable
