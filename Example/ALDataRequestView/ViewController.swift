@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         
         testWithFailureCallObservable()
 //        testWithFailureCallSignalProducer()
+//        testWithFailureCallObservable()
     }
     
     deinit {
@@ -92,7 +93,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController : ALDataRequestViewDataSource {
-    func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView {
+    func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? {
         let loadingView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
         loadingView.startAnimating()
         return loadingView
@@ -103,7 +104,7 @@ extension ViewController : ALDataRequestViewDataSource {
         return reloadVC
     }
     
-    func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView {
+    func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? {
         let emptyLabel = UILabel(forAutoLayout: ())
         emptyLabel.text = "Data is empty"
         return emptyLabel
