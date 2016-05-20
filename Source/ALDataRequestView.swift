@@ -38,6 +38,8 @@ public protocol ALDataRequestViewDataSource : class {
     func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
     func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType?
     func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
+    func hideAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double
+    func showAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double
 }
 
 // Make methods optional with default implementations
@@ -45,6 +47,8 @@ public extension ALDataRequestViewDataSource {
     func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? { return nil }
     func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType? { return nil }
     func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? { return nil }
+    func hideAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double { return 0 }
+    func showAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double { return 0 }
 }
 
 public class ALDataRequestView: UIView {
@@ -109,38 +113,48 @@ public class ALDataRequestView: UIView {
         guard state != self.state else { return }
         
         self.state = state
-        
-        switch state {
-        case .Possible:
-            resetToPossibleState()
-            hidden = true
-            break
-        case .Loading:
-            resetToPossibleState()
-            showLoadingView()
-            break
-        case .Failed:
-            resetToPossibleState()
-            showReloadView()
-            break
-        case .Success:
-            resetToPossibleState()
-            hidden = true
-            break
-        case .Empty:
-            resetToPossibleState()
-            showEmptyView()
-            break
-        }
+        resetToPossibleState({ [weak self] (completed) in ()
+            switch state {
+            case .Possible:
+                self?.hidden = true
+                break
+            case .Loading:
+                self?.showLoadingView()
+                break
+            case .Failed:
+                self?.showReloadView()
+                break
+            case .Success:
+                self?.hidden = true
+                break
+            case .Empty:
+                self?.showEmptyView()
+                break
+            }
+            })
     }
     
     // MARK: Private Methods
     
     /// This will remove all views added
-    private func resetToPossibleState(){
-        loadingView?.removeFromSuperview()
-        emptyView?.removeFromSuperview()
-        reloadView?.removeFromSuperview()
+    private func resetToPossibleState(completion: ((Bool) -> Void)?){
+        UIView.animateWithDuration(dataSource?.hideAnimationDurationForDataRequestView(self) ?? 0, animations: { [unowned self] in ()
+            self.loadingView?.alpha = 0
+            self.emptyView?.alpha = 0
+            self.reloadView?.alpha = 0
+        }) { [weak self] (completed) in
+            self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
+            if let completion = completion {
+                completion(completed)
+            }
+        }
+    }
+    
+    private func resetViews(views: [UIView?]) {
+        for view in views {
+            view?.alpha = 1
+            view?.removeFromSuperview()
+        }
     }
     
     /// This will show the loading view
@@ -158,6 +172,11 @@ public class ALDataRequestView: UIView {
             loadingView?.autoPinEdgesToSuperviewEdges()
             layoutIfNeeded()
         }
+        
+        dataSourceLoadingView.alpha = 0
+        UIView.animateWithDuration(dataSource?.showAnimationDurationForDataRequestView(self) ?? 0, animations: {
+            dataSourceLoadingView.alpha = 1
+        })
     }
     
     /// This will show the reload view
@@ -184,6 +203,10 @@ public class ALDataRequestView: UIView {
         dataSourceReloadType.setupForReloadType(ReloadReason.GeneralError)
         dataSourceReloadType.retryButton.addTarget(self, action: "retryButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
+        reloadView.alpha = 0
+        UIView.animateWithDuration(dataSource?.showAnimationDurationForDataRequestView(self) ?? 0, animations: {
+            reloadView.alpha = 1
+        })
     }
     
     /// This will show the empty view
@@ -198,6 +221,11 @@ public class ALDataRequestView: UIView {
         emptyView = dataSourceEmptyView
         addSubview(emptyView!)
         emptyView?.autoPinEdgesToSuperviewEdges()
+        
+        dataSourceEmptyView.alpha = 0
+        UIView.animateWithDuration(dataSource?.showAnimationDurationForDataRequestView(self) ?? 0, animations: {
+            dataSourceEmptyView.alpha = 1
+        })
     }
     
     /// IBAction for the retry button

@@ -109,6 +109,14 @@ extension ViewController : ALDataRequestViewDataSource {
         emptyLabel.text = "Data is empty"
         return emptyLabel
     }
+    
+    func hideAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double {
+        return 0.25
+    }
+    
+    func showAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double {
+        return 0.25
+    }
 }
 
 final class ReloadViewController : UIViewController, ALDataReloadType {
