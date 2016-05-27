@@ -204,7 +204,7 @@ public class ALDataRequestView: UIView {
         }
         
         var reloadReason: ReloadReason = .GeneralError
-        if let error = error as? NSError where error.isNetworkConnectionError() {
+        if let error = error as? NSError where error.isNetworkConnectionError() || reachability?.isReachable() == false {
             reloadReason = .NoInternetConnection
         }
         
