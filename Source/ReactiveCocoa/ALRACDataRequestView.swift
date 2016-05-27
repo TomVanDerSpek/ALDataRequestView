@@ -14,7 +14,7 @@ public extension SignalProducerType {
         let newSignalProducer = producer.observeOn(UIScheduler()).on(started: { [weak dataRequestView] () -> () in
             dataRequestView?.changeRequestState(.Loading)
             }, failed: { [weak dataRequestView] (error) in
-                dataRequestView?.changeRequestState(.Failed)
+                dataRequestView?.changeRequestState(.Failed, error: error)
             }) { [weak dataRequestView] (object) in
             if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
                 dataRequestView?.changeRequestState(.Empty)

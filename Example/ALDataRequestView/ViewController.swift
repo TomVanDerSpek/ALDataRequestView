@@ -31,8 +31,8 @@ class ViewController: UIViewController {
         view.sendSubviewToBack(dataRequestView!)
         
         
-        testWithFailureCallObservable()
-//        testWithFailureCallSignalProducer()
+//        testWithFailureCallObservable()
+        testWithFailureCallSignalProducer()
 //        testWithFailureCallObservable()
     }
     
@@ -142,8 +142,8 @@ final class ReloadViewController : UIViewController, ALDataReloadType {
         super.init(coder: aDecoder)
     }
     
-    func setupForReloadType(reloadType: ReloadReason) {
-        switch reloadType {
+    func setupForReloadType(reloadType: ReloadType) {
+        switch reloadType.reason {
         case .GeneralError:
             statusLabel.text = "General error occured"
         case .NoInternetConnection:

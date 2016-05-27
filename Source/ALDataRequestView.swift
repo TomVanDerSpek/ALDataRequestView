@@ -25,13 +25,18 @@ public enum ReloadReason {
     case NoInternetConnection
 }
 
+public struct ReloadType {
+    public var reason: ReloadReason
+    public var error: ErrorType?
+}
+
 public protocol Emptyable {
     var isEmpty:Bool { get }
 }
 
 public protocol ALDataReloadType {
     var retryButton:UIButton! { get set }
-    func setupForReloadType(reloadType:ReloadReason)
+    func setupForReloadType(reloadType:ReloadType)
 }
 
 public protocol ALDataRequestViewDataSource : class {
@@ -109,7 +114,7 @@ public class ALDataRequestView: UIView {
     }
     
     // MARK: Public Methods
-    public func changeRequestState(state:RequestState){
+    public func changeRequestState(state:RequestState, error: ErrorType? = nil){
         guard state != self.state else { return }
         
         self.state = state
@@ -122,7 +127,7 @@ public class ALDataRequestView: UIView {
                 self?.showLoadingView()
                 break
             case .Failed:
-                self?.showReloadView()
+                self?.showReloadView(error)
                 break
             case .Success:
                 self?.hidden = true
@@ -180,7 +185,7 @@ public class ALDataRequestView: UIView {
     }
     
     /// This will show the reload view
-    internal func showReloadView(){
+    internal func showReloadView(error: ErrorType? = nil){
         guard let dataSourceReloadType = dataSource?.reloadViewControllerForDataRequestView(self) else {
             debugLog("No reload view provided!")
             return
@@ -197,10 +202,16 @@ public class ALDataRequestView: UIView {
             debugLog("Could not determine reloadView")
             return
         }
+        
+        var reloadReason: ReloadReason = .GeneralError
+        if let error = error as? NSError where error.isNetworkConnectionError() {
+            reloadReason = .NoInternetConnection
+        }
+        
         hidden = false
         addSubview(reloadView)
         reloadView.autoPinEdgesToSuperviewEdges()
-        dataSourceReloadType.setupForReloadType(ReloadReason.GeneralError)
+        dataSourceReloadType.setupForReloadType(ReloadType(reason: reloadReason, error: error))
         dataSourceReloadType.retryButton.addTarget(self, action: "retryButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         reloadView.alpha = 0
@@ -293,5 +304,16 @@ private extension ALDataRequestView {
 private extension ALDataRequestView {
     func debugLog(logString:String){
         print("ALDataRequestView: \(logString)")
+    }
+}
+
+public extension NSError {
+    func isNetworkConnectionError() -> Bool {
+        let networkErrors = [NSURLErrorNetworkConnectionLost, NSURLErrorNotConnectedToInternet]
+        
+        if self.domain == NSURLErrorDomain && networkErrors.contains(self.code) {
+            return true
+        }
+        return false
     }
 }
