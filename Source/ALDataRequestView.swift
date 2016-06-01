@@ -113,7 +113,6 @@ public class ALDataRequestView: UIView {
         switch state {
         case .Possible:
             resetToPossibleState()
-            hidden = true
             break
         case .Loading:
             resetToPossibleState()
@@ -125,7 +124,6 @@ public class ALDataRequestView: UIView {
             break
         case .Success:
             resetToPossibleState()
-            hidden = true
             break
         case .Empty:
             resetToPossibleState()
@@ -141,6 +139,7 @@ public class ALDataRequestView: UIView {
         loadingView?.removeFromSuperview()
         emptyView?.removeFromSuperview()
         reloadView?.removeFromSuperview()
+        hidden = true
     }
     
     /// This will show the loading view

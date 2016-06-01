@@ -1,13 +1,13 @@
 PODS:
-  - ALDataRequestView (1.0.0):
-    - ALDataRequestView/Core (= 1.0.0)
-  - ALDataRequestView/Core (1.0.0):
+  - ALDataRequestView (1.0.2):
+    - ALDataRequestView/Core (= 1.0.2)
+  - ALDataRequestView/Core (1.0.2):
     - PureLayout
     - ReachabilitySwift
-  - ALDataRequestView/ReactiveCocoa (1.0.0):
+  - ALDataRequestView/ReactiveCocoa (1.0.2):
     - ALDataRequestView/Core
     - ReactiveCocoa
-  - ALDataRequestView/RxSwift (1.0.0):
+  - ALDataRequestView/RxSwift (1.0.2):
     - ALDataRequestView/Core
     - RxCocoa (~> 2.0.0)
     - RxSwift (~> 2.0.0)
@@ -40,8 +40,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ALDataRequestView: 912decbf4da74123b01762db331bfb040f24eb09
-  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
+  ALDataRequestView: 68eed0e375a07c4253e0c11e67e01ea13db7c481
+  PureLayout: b31c87e589ad248409814082e880fb87656ddf60
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   ReactiveCocoa: d70004d7a366a7b8e87e60ce2347182c77701949
   Result: 9e75e1111c774c6ac594e14907b15057053a7959
