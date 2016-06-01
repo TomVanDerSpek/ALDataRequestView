@@ -117,6 +117,8 @@ public class ALDataRequestView: UIView {
     public func changeRequestState(state:RequestState, error: ErrorType? = nil){
         guard state != self.state else { return }
         
+        layer.removeAllAnimations()
+        
         self.state = state
         resetToPossibleState({ [weak self] (completed) in ()
             switch state {
@@ -144,10 +146,12 @@ public class ALDataRequestView: UIView {
             self.emptyView?.alpha = 0
             self.reloadView?.alpha = 0
         }) { [weak self] (completed) in
-            self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
-            self?.hidden = true
-            if let completion = completion {
-                completion(completed)
+            if completed {
+                self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
+                self?.hidden = true
+                if let completion = completion {
+                    completion(completed)
+                }
             }
         }
     }
