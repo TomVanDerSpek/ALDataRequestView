@@ -62,6 +62,9 @@ public class ALDataRequestView: UIView {
     /// If failed earlier, the retryAction will be triggered when reachability changed to reachable
     public var automaticallyRetryWhenReachable:Bool = true
     
+    /// Set to true for debugging purposes
+    public var loggingEnabled:Bool = false
+    
     // Internal properties
     internal var state:RequestState = .Possible
     
@@ -96,12 +99,12 @@ public class ALDataRequestView: UIView {
         initOnForegroundObserver()
         initReachabilityMonitoring()
         
-//        print("Init DataRequestView")
+        debugLog("Init DataRequestView")
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
-        print("Deinit DataRequestView")
+        debugLog("Deinit DataRequestView")
     }
     
     // MARK: Public Methods
@@ -244,12 +247,12 @@ private extension ALDataRequestView {
             return
         }
         
-        reachability?.whenReachable = { [unowned self] reachability in
-            guard self.automaticallyRetryWhenReachable == true else {
+        reachability?.whenReachable = { [weak self] reachability in
+            guard self?.automaticallyRetryWhenReachable == true else {
                 return
             }
             
-            self.retryIfRetryable()
+            self?.retryIfRetryable()
         }
         
         do {
@@ -263,6 +266,7 @@ private extension ALDataRequestView {
 /// Logging purposes
 private extension ALDataRequestView {
     func debugLog(logString:String){
+        guard loggingEnabled else { return }
         print("ALDataRequestView: \(logString)")
     }
 }
