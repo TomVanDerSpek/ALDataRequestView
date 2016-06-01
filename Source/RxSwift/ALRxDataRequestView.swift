@@ -14,18 +14,19 @@ public extension ObservableType {
     func attachToDataRequestView(dataRequestView:ALDataRequestView) -> Observable<E> {
         let observable = Observable.using({ () in
             return AnonymousDisposable({
-                // Dispose acion of observable
+                // Dispose the observer that's observing the observer
             })
             }, observableFactory: { [weak dataRequestView] (_) -> Observable<E> in
                 dataRequestView?.changeRequestState(.Loading)
-                return self.observeOn(MainScheduler.instance).doOn(onNext: { [weak dataRequestView] (object) in
-                    if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
-                        dataRequestView?.changeRequestState(.Empty)
-                    } else if let arrayObject = object as? NSArray where arrayObject.count == 0 {
-                        dataRequestView?.changeRequestState(.Empty)
-                    } else {
-                        dataRequestView?.changeRequestState(.Success)
-                    }
+                return self.observeOn(MainScheduler.instance)
+                    .doOn(onNext: { [weak dataRequestView] (object) in
+                        if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
+                            dataRequestView?.changeRequestState(.Empty)
+                        } else if let arrayObject = object as? NSArray where arrayObject.count == 0 {
+                            dataRequestView?.changeRequestState(.Empty)
+                        } else {
+                            dataRequestView?.changeRequestState(.Success)
+                        }
                     }, onError: { [weak dataRequestView] (_) in
                         dataRequestView?.changeRequestState(.Failed)
                     })
