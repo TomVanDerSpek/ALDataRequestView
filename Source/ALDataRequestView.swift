@@ -120,20 +120,16 @@ public class ALDataRequestView: UIView {
         self.state = state
         resetToPossibleState({ [weak self] (completed) in ()
             switch state {
-            case .Possible:
-                self?.hidden = true
-                break
             case .Loading:
                 self?.showLoadingView()
                 break
             case .Failed:
                 self?.showReloadView(error)
                 break
-            case .Success:
-                self?.hidden = true
-                break
             case .Empty:
                 self?.showEmptyView()
+                break
+            default:
                 break
             }
             })
@@ -149,6 +145,7 @@ public class ALDataRequestView: UIView {
             self.reloadView?.alpha = 0
         }) { [weak self] (completed) in
             self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
+            self?.hidden = true
             if let completion = completion {
                 completion(completed)
             }
