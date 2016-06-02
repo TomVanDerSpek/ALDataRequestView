@@ -141,10 +141,10 @@ public class ALDataRequestView: UIView {
     
     /// This will remove all views added
     private func resetToPossibleState(completion: ((Bool) -> Void)?){
-        UIView.animateWithDuration(dataSource?.hideAnimationDurationForDataRequestView(self) ?? 0, animations: { [unowned self] in ()
-            self.loadingView?.alpha = 0
-            self.emptyView?.alpha = 0
-            self.reloadView?.alpha = 0
+        UIView.animateWithDuration(dataSource?.hideAnimationDurationForDataRequestView(self) ?? 0, animations: { [weak self] in ()
+            self?.loadingView?.alpha = 0
+            self?.emptyView?.alpha = 0
+            self?.reloadView?.alpha = 0
         }) { [weak self] (completed) in
             if completed {
                 self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
@@ -179,10 +179,7 @@ public class ALDataRequestView: UIView {
             layoutIfNeeded()
         }
         
-        dataSourceLoadingView.alpha = 0
-        UIView.animateWithDuration(dataSource?.showAnimationDurationForDataRequestView(self) ?? 0, animations: {
-            dataSourceLoadingView.alpha = 1
-        })
+        dataSourceLoadingView.showWithDuration(dataSource?.showAnimationDurationForDataRequestView(self))
     }
     
     /// This will show the reload view
@@ -215,10 +212,7 @@ public class ALDataRequestView: UIView {
         dataSourceReloadType.setupForReloadType(ReloadType(reason: reloadReason, error: error))
         dataSourceReloadType.retryButton.addTarget(self, action: "retryButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        reloadView.alpha = 0
-        UIView.animateWithDuration(dataSource?.showAnimationDurationForDataRequestView(self) ?? 0, animations: {
-            reloadView.alpha = 1
-        })
+        reloadView.showWithDuration(dataSource?.showAnimationDurationForDataRequestView(self))
     }
     
     /// This will show the empty view
@@ -308,7 +302,8 @@ private extension ALDataRequestView {
     }
 }
 
-public extension NSError {
+/// NSError extension
+private extension NSError {
     func isNetworkConnectionError() -> Bool {
         let networkErrors = [NSURLErrorNetworkConnectionLost, NSURLErrorNotConnectedToInternet]
         
@@ -316,5 +311,21 @@ public extension NSError {
             return true
         }
         return false
+    }
+}
+
+/// UIView extension
+private extension UIView {
+    
+    func showWithDuration(duration: Double?) {
+        guard let duration = duration else {
+            self.alpha = 1
+            return
+        }
+        
+        self.alpha = 0
+        UIView.animateWithDuration(duration, animations: {
+            self.alpha = 1
+        })
     }
 }
