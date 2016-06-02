@@ -1,11 +1,8 @@
-# 1.0.3
+# 1.0.2
 
 - Allows for fading in and out of loading/error views
 - Pass through error when call fails
 - Fixed NoInternetConnection ReloadReason
-
-# 1.0.2
-
 - Fixed RxSwift issue: RequestState will now be on .Loading when the observer subscribes
 - Allows nil for reload and empty view
 

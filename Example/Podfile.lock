@@ -37,11 +37,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   ALDataRequestView:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   ALDataRequestView: 68eed0e375a07c4253e0c11e67e01ea13db7c481
-  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
+  PureLayout: 3776d602389d93977b4a4431f1b5cb0e0eed2524
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   ReactiveCocoa: d70004d7a366a7b8e87e60ce2347182c77701949
   Result: 9e75e1111c774c6ac594e14907b15057053a7959

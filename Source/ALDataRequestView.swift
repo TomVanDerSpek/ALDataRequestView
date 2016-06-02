@@ -149,18 +149,16 @@ public class ALDataRequestView: UIView {
             self?.emptyView?.alpha = 0
             self?.reloadView?.alpha = 0
         }) { [weak self] (completed) in
-            if completed {
-                self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
-                self?.hidden = true
-                if let completion = completion {
-                    completion(completed)
-                }
-            }
+            guard completed else { return }
+            
+            self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
+            self?.hidden = true
+            completion?(completed)
         }
     }
     
     private func resetViews(views: [UIView?]) {
-        for view in views {
+        views.forEach { (view) in
             view?.alpha = 1
             view?.removeFromSuperview()
         }
