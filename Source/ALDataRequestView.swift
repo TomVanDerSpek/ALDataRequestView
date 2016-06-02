@@ -39,6 +39,11 @@ public protocol ALDataReloadType {
     func setupForReloadType(reloadType:ReloadType)
 }
 
+// Make methods optional with default implementations
+public extension ALDataReloadType {
+    func setupForReloadType(reloadType:ReloadType){ }
+}
+
 public protocol ALDataRequestViewDataSource : class {
     func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
     func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType?
@@ -57,7 +62,7 @@ public extension ALDataRequestViewDataSource {
 }
 
 public class ALDataRequestView: UIView {
-
+    
     // Public properties
     public weak var dataSource:ALDataRequestViewDataSource?
     
@@ -82,7 +87,7 @@ public class ALDataRequestView: UIView {
     private var reloadView:UIView?
     private var emptyView:UIView?
     private var reachability:Reachability?
-
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
         setup()
@@ -124,6 +129,7 @@ public class ALDataRequestView: UIView {
         
         self.state = state
         resetToPossibleState({ [weak self] (completed) in ()
+            guard let state = self?.state else { return }
             switch state {
             case .Loading:
                 self?.showLoadingView()
@@ -266,7 +272,7 @@ private extension ALDataRequestView {
     }
 }
 
-/// Reachability methods 
+/// Reachability methods
 private extension ALDataRequestView {
     
     func initReachabilityMonitoring(){
