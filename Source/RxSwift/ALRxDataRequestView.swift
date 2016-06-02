@@ -27,8 +27,8 @@ public extension ObservableType {
                         } else {
                             dataRequestView?.changeRequestState(.Success)
                         }
-                    }, onError: { [weak dataRequestView] (_) in
-                        dataRequestView?.changeRequestState(.Failed)
+                    }, onError: { [weak dataRequestView] (error) in
+                        dataRequestView?.changeRequestState(.Failed, error: error)
                     })
             })
         

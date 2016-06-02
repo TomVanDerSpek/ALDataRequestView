@@ -31,8 +31,8 @@ class ViewController: UIViewController {
         view.sendSubviewToBack(dataRequestView!)
         
         
-        testWithFailureCallObservable()
-//        testWithFailureCallSignalProducer()
+//        testWithFailureCallObservable()
+        testWithFailureCallSignalProducer()
 //        testWithFailureCallObservable()
     }
     
@@ -109,6 +109,14 @@ extension ViewController : ALDataRequestViewDataSource {
         emptyLabel.text = "Data is empty"
         return emptyLabel
     }
+    
+    func hideAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double {
+        return 0.25
+    }
+    
+    func showAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double {
+        return 0.25
+    }
 }
 
 final class ReloadViewController : UIViewController, ALDataReloadType {
@@ -134,8 +142,8 @@ final class ReloadViewController : UIViewController, ALDataReloadType {
         super.init(coder: aDecoder)
     }
     
-    func setupForReloadType(reloadType: ReloadReason) {
-        switch reloadType {
+    func setupForReloadType(reloadType: ReloadType) {
+        switch reloadType.reason {
         case .GeneralError:
             statusLabel.text = "General error occured"
         case .NoInternetConnection:

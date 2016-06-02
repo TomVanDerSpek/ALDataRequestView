@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10112" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YhN-l8-BAI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YhN-l8-BAI">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10083"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,21 +18,21 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="beG-5V-Upb">
-                                <rect key="frame" x="20" y="550" width="186.5" height="30"/>
+                                <rect key="frame" x="20" y="550" width="187" height="30"/>
                                 <state key="normal" title="Set Loading"/>
                                 <connections>
                                     <action selector="setLoadingButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="BPS-tF-JdQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eV-Lg-gbk">
-                                <rect key="frame" x="206.5" y="550" width="187" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eV-Lg-gbk">
+                                <rect key="frame" x="207" y="550" width="187" height="30"/>
                                 <state key="normal" title="Set Reload"/>
                                 <connections>
                                     <action selector="setReloadButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="beZ-jV-VaY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WPo-7I-ymu">
-                                <rect key="frame" x="393.5" y="550" width="186.5" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WPo-7I-ymu">
+                                <rect key="frame" x="394" y="550" width="186" height="30"/>
                                 <state key="normal" title="Set Empty"/>
                                 <connections>
                                     <action selector="setEmptyButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Lkj-bv-kr0"/>
@@ -77,21 +77,21 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZ8-YR-uzS">
-                                <rect key="frame" x="20" y="550" width="186.5" height="30"/>
+                                <rect key="frame" x="20" y="550" width="187" height="30"/>
                                 <state key="normal" title="Set Loading"/>
                                 <connections>
                                     <action selector="setLoadingButtonTapped:" destination="cDS-v0-U8x" eventType="touchUpInside" id="QQW-6J-Ic7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qd0-1h-FPm">
-                                <rect key="frame" x="206.5" y="550" width="187" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qd0-1h-FPm">
+                                <rect key="frame" x="207" y="550" width="187" height="30"/>
                                 <state key="normal" title="Set Reload"/>
                                 <connections>
                                     <action selector="setReloadButtonTapped:" destination="cDS-v0-U8x" eventType="touchUpInside" id="cQi-OG-hkX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LtL-Fy-PYw">
-                                <rect key="frame" x="393.5" y="550" width="186.5" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LtL-Fy-PYw">
+                                <rect key="frame" x="394" y="550" width="186" height="30"/>
                                 <state key="normal" title="Set Empty"/>
                                 <connections>
                                     <action selector="setEmptyButtonTapped:" destination="cDS-v0-U8x" eventType="touchUpInside" id="Eih-qb-qN0"/>
