@@ -228,10 +228,7 @@ public class ALDataRequestView: UIView {
         addSubview(emptyView!)
         emptyView?.autoPinEdgesToSuperviewEdges()
         
-        dataSourceEmptyView.alpha = 0
-        UIView.animateWithDuration(dataSource?.showAnimationDurationForDataRequestView(self) ?? 0, animations: {
-            dataSourceEmptyView.alpha = 1
-        })
+        dataSourceEmptyView.showWithDuration(dataSource?.showAnimationDurationForDataRequestView(self))
     }
     
     /// IBAction for the retry button
