@@ -143,7 +143,7 @@ public class ALDataRequestView: UIView {
             default:
                 break
             }
-            })
+        })
     }
     
     // MARK: Private Methods
