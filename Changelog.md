@@ -1,3 +1,6 @@
+# 1.0.3
+- Fixed a bug in switching quickly between states
+
 # 1.0.2
 
 - Allows for fading in and out of loading/error views
