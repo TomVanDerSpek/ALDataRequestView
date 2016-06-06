@@ -143,7 +143,7 @@ public class ALDataRequestView: UIView {
             default:
                 break
             }
-        })
+            })
     }
     
     // MARK: Private Methods
@@ -155,8 +155,6 @@ public class ALDataRequestView: UIView {
             self?.emptyView?.alpha = 0
             self?.reloadView?.alpha = 0
         }) { [weak self] (completed) in
-            guard completed else { return }
-            
             self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
             self?.hidden = true
             completion?(completed)

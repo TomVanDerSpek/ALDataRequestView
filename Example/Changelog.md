@@ -1,3 +1,6 @@
+# Next
+- Fixed an issue hidden = false is not called on completion
+
 # 1.0.3
 - Fixed a bug in switching states quickly
 
