@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "ALDataRequestView"
-    s.version          = "1.0.3"
+    s.version          = "1.0.4"
     s.summary          = "A view representation for data requests. Support for ReactiveCocoa and RXSwift."
     s.description      = "A view representation for data requests. Support for ReactiveCocoa and RXSwift by attached it to signalproducers and observables."
     s.homepage         = "https://github.com/AvdLee/ALDataRequestView"
