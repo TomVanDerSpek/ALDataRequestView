@@ -10,14 +10,14 @@ import UIKit
 import ALDataRequestView
 import PureLayout
 import RxSwift
-import ReactiveCocoa
+import ReactiveSwift
 import RxCocoa
 
 class ViewController: UIViewController {
 
     var dataRequestView:ALDataRequestView?
     var signalProducer:SignalProducer<[String], NSError>?
-    var dataSignalProducer:SignalProducer<NSData, NSError>?
+    var dataSignalProducer:SignalProducer<Data, NSError>?
     var rxDisposable:RxSwift.Disposable?
     let (signal, subscriber) = Signal<[String], NSError>.pipe()
     
@@ -28,11 +28,11 @@ class ViewController: UIViewController {
         view.addSubview(dataRequestView!)
         dataRequestView?.autoPinEdgesToSuperviewEdges()
         dataRequestView?.dataSource = self
-        view.sendSubviewToBack(dataRequestView!)
+        view.sendSubview(toBack: dataRequestView!)
         
         
-//        testWithFailureCallObservable()
-        testWithFailureCallSignalProducer()
+        testWithFailureCallObservable()
+//        testWithFailureCallSignalProducer()
 //        testWithFailureCallObservable()
     }
     
@@ -41,60 +41,57 @@ class ViewController: UIViewController {
     }
     
     func testWithEmptySignalProducer(){
-        signalProducer = SignalProducer(signal: signal).attachToDataRequestView(dataRequestView!)
+        signalProducer = SignalProducer(signal: signal).attachToDataRequestView(dataRequestView: dataRequestView!)
         signalProducer?.start()
         
-        delay(3.0, closure: { [weak self] () -> Void in
+        delay(delay: 3.0, closure: { [weak self] () -> Void in
             let emptyArray:[String] = []
-            self?.subscriber.sendNext(emptyArray) // Send empty array
+            self?.subscriber.send(value: emptyArray) // Send empty array
             self?.subscriber.sendCompleted()
         })
     }
     
     func testWithFailureCallSignalProducer(){
-        let URLRequest = NSURLRequest(URL: NSURL(string: "http://httpbin.org/status/400")!)
-        dataSignalProducer = NSURLSession.sharedSession()
-            .rac_dataWithRequest(URLRequest)
-            .flatMap(.Latest, transform: { (data, response) -> SignalProducer<NSData, NSError> in
-                if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode > 299 {
+        let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
+        dataSignalProducer = URLSession.shared
+            .reactive.data(with: request)
+            .flatMap(.latest, transform: { (data, response) -> SignalProducer<Data, NSError> in
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode > 299 {
                     return SignalProducer(error: NSError(domain: "", code: httpResponse.statusCode, userInfo: nil))
                 }
                 return SignalProducer(value: data)
             })
-            .attachToDataRequestView(dataRequestView!)
+            .attachToDataRequestView(dataRequestView: dataRequestView!)
         dataSignalProducer?.start()
     }
     
     func testWithFailureCallObservable(){
-        let URLRequest = NSURLRequest(URL: NSURL(string: "http://httpbin.org/status/400")!)
-        rxDisposable = NSURLSession.sharedSession().rx_data(URLRequest).attachToDataRequestView(dataRequestView!).subscribe()
+        let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
+        rxDisposable = URLSession.shared.rx.data(request: request).attachToDataRequestView(dataRequestView: dataRequestView!).subscribe()
     }
 
     @IBAction func setLoadingButtonTapped(sender: UIButton) {
-        dataRequestView?.changeRequestState(RequestState.Loading)
+        dataRequestView?.changeRequestState(state: RequestState.Loading)
     }
     
     @IBAction func setEmptyButtonTapped(sender: UIButton) {
-        dataRequestView?.changeRequestState(RequestState.Empty)
+        dataRequestView?.changeRequestState(state: RequestState.Empty)
     }
     
     @IBAction func setReloadButtonTapped(sender: UIButton) {
-        dataRequestView?.changeRequestState(RequestState.Failed)
+        dataRequestView?.changeRequestState(state: RequestState.Failed)
     }
     
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            closure()
+        }
     }
 }
 
 extension ViewController : ALDataRequestViewDataSource {
     func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? {
-        let loadingView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        let loadingView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
         loadingView.startAnimating()
         return loadingView
     }
@@ -127,15 +124,15 @@ final class ReloadViewController : UIViewController, ALDataReloadType {
     init(){
         super.init(nibName: nil, bundle: nil)
         
-        retryButton = UIButton(type: UIButtonType.System)
-        retryButton.setTitle("Reload!", forState: UIControlState.Normal)
+        retryButton = UIButton(type: UIButtonType.system)
+        retryButton.setTitle("Reload!", for: UIControlState.normal)
         view.addSubview(retryButton)
         retryButton.autoCenterInSuperview()
         
         statusLabel = UILabel(forAutoLayout: ())
         view.addSubview(statusLabel)
-        statusLabel.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
-        statusLabel.autoPinEdge(.Bottom, toEdge: .Top, ofView: retryButton)
+        statusLabel.autoAlignAxis(toSuperviewAxis: ALAxis.vertical)
+        statusLabel.autoPinEdge(.bottom, to: .top, of: retryButton)
     }
     
     required init?(coder aDecoder: NSCoder) {

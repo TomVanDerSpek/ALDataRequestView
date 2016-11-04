@@ -12,29 +12,31 @@ import RxCocoa
 public extension ObservableType {
     
     func attachToDataRequestView(dataRequestView:ALDataRequestView) -> Observable<E> {
-        let observable = Observable.using({ () in
-            return AnonymousDisposable({
-                // Dispose the observer that's observing the observer
-            })
-            }, observableFactory: { [weak dataRequestView] (_) -> Observable<E> in
-                dataRequestView?.changeRequestState(.Loading)
-                return self.observeOn(MainScheduler.instance)
-                    .doOn(onNext: { [weak dataRequestView] (object) in
-                        if let emptyableObject = object as? Emptyable where emptyableObject.isEmpty == true {
-                            dataRequestView?.changeRequestState(.Empty)
-                        } else if let arrayObject = object as? NSArray where arrayObject.count == 0 {
-                            dataRequestView?.changeRequestState(.Empty)
-                        } else {
-                            dataRequestView?.changeRequestState(.Success)
-                        }
-                    }, onError: { [weak dataRequestView] (error) in
-                        dataRequestView?.changeRequestState(.Failed, error: error)
-                    })
-            })
+        let resourceFactory: () throws -> BooleanDisposable = { () -> BooleanDisposable in
+            return BooleanDisposable()
+        }
+        let observableFactory:(Disposable) throws -> Observable<E> = { [weak dataRequestView] (_) throws -> Observable<E> in
+            dataRequestView?.changeRequestState(state: .Loading)
+            
+            return self.observeOn(MainScheduler.instance)
+                .do(onNext: { [weak dataRequestView] (object) in
+                    if let emptyableObject = object as? Emptyable, emptyableObject.isEmpty == true {
+                        dataRequestView?.changeRequestState(state: .Empty)
+                    } else if let arrayObject = object as? NSArray, arrayObject.count == 0 {
+                        dataRequestView?.changeRequestState(state:.Empty)
+                    } else {
+                        dataRequestView?.changeRequestState(state:.Success)
+                    }
+                }, onError: { [weak dataRequestView] (error) in
+                    dataRequestView?.changeRequestState(state: .Failed, error: error)
+                })
+        }
         
+        let observable = Observable.using(resourceFactory, observableFactory: observableFactory)
+
         dataRequestView.retryAction = { [weak dataRequestView] () -> Void in
             if let dataRequestView = dataRequestView {
-                observable.takeUntil(dataRequestView.rx_deallocated).subscribe()
+                observable.takeUntil(dataRequestView.rx.deallocated).subscribe()
             }
         }
         

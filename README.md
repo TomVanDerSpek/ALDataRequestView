@@ -1,7 +1,7 @@
 # ALDataRequestView
 
 [![Version](https://img.shields.io/cocoapods/v/ALDataRequestView.svg?style=flat)](http://cocoapods.org/pods/ALDataRequestView)
-[![Language](https://img.shields.io/badge/language-swift2.3-f48041.svg?style=flat)](https://developer.apple.com/swift)
+[![Language](https://img.shields.io/badge/language-swift3.0-f48041.svg?style=flat)](https://developer.apple.com/swift)
 [![License](https://img.shields.io/cocoapods/l/ALDataRequestView.svg?style=flat)](http://cocoapods.org/pods/ALDataRequestView)
 [![Platform](https://img.shields.io/cocoapods/p/ALDataRequestView.svg?style=flat)](http://cocoapods.org/pods/ALDataRequestView)
 [![Twitter](https://img.shields.io/badge/twitter-@twannl-blue.svg?style=flat)](http://twitter.com/twannl)
@@ -36,22 +36,22 @@ func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
 ##### RxSwift
 
 ```swift
-let URLRequest = NSURLRequest(URL: NSURL(string: "http://httpbin.org/status/400")!)
-NSURLSession.sharedSession().rx_data(URLRequest).attachToDataRequestView(dataRequestView!).subscribe()
+let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
+rxDisposable = URLSession.shared.rx.data(request: request).attachToDataRequestView(dataRequestView: dataRequestView!).subscribe()
 ```
 ##### ReactiveCocoa
 
 ```swift
-let URLRequest = NSURLRequest(URL: NSURL(string: "http://httpbin.org/status/400")!)
-NSURLSession.sharedSession()
-    .rac_dataWithRequest(URLRequest)
-    .flatMap(.Latest, transform: { (data, response) -> SignalProducer<NSData, NSError> in
-        if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode > 299 {
+let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
+dataSignalProducer = URLSession.shared
+    .reactive.data(with: request)
+    .flatMap(.latest, transform: { (data, response) -> SignalProducer<Data, NSError> in
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode > 299 {
             return SignalProducer(error: NSError(domain: "", code: httpResponse.statusCode, userInfo: nil))
         }
         return SignalProducer(value: data)
     })
-    .attachToDataRequestView(dataRequestView!)
+    .attachToDataRequestView(dataRequestView: dataRequestView!)
 
 ```
 

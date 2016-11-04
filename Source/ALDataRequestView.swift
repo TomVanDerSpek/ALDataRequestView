@@ -27,7 +27,7 @@ public enum ReloadReason {
 
 public struct ReloadType {
     public var reason: ReloadReason
-    public var error: ErrorType?
+    public var error: Error?
 }
 
 public protocol Emptyable {
@@ -86,7 +86,7 @@ public class ALDataRequestView: UIView {
     private var loadingView:UIView?
     private var reloadView:UIView?
     private var emptyView:UIView?
-    private var reachability:Reachability?
+    fileprivate var reachability:Reachability?
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -104,38 +104,38 @@ public class ALDataRequestView: UIView {
     
     internal func setup(){
         // Hide by default
-        hidden = true
+        isHidden = true
         
         // Background color is not needed
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         
         // Setup for automatic retrying
         initOnForegroundObserver()
         initReachabilityMonitoring()
         
-        debugLog("Init DataRequestView")
+        debugLog(logString: "Init DataRequestView")
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-        debugLog("Deinit DataRequestView")
+        NotificationCenter.default.removeObserver(self)
+        debugLog(logString: "Deinit DataRequestView")
     }
     
     // MARK: Public Methods
-    public func changeRequestState(state:RequestState, error: ErrorType? = nil){
+    public func changeRequestState(state:RequestState, error: Error? = nil){
         guard state != self.state else { return }
         
         layer.removeAllAnimations()
         
         self.state = state
-        resetToPossibleState({ [weak self] (completed) in ()
+        resetToPossibleState(completion: { [weak self] (completed) in ()
             guard let state = self?.state else { return }
             switch state {
             case .Loading:
                 self?.showLoadingView()
                 break
             case .Failed:
-                self?.showReloadView(error)
+                self?.showReloadView(error: error)
                 break
             case .Empty:
                 self?.showEmptyView()
@@ -150,13 +150,13 @@ public class ALDataRequestView: UIView {
     
     /// This will remove all views added
     private func resetToPossibleState(completion: ((Bool) -> Void)?){
-        UIView.animateWithDuration(dataSource?.hideAnimationDurationForDataRequestView(self) ?? 0, animations: { [weak self] in ()
+        UIView.animate(withDuration: dataSource?.hideAnimationDurationForDataRequestView(dataRequestView: self) ?? 0, animations: { [weak self] in ()
             self?.loadingView?.alpha = 0
             self?.emptyView?.alpha = 0
             self?.reloadView?.alpha = 0
         }) { [weak self] (completed) in
-            self?.resetViews([self?.loadingView, self?.emptyView, self?.reloadView])
-            self?.hidden = true
+            self?.resetViews(views: [self?.loadingView, self?.emptyView, self?.reloadView])
+            self?.isHidden = true
             completion?(completed)
         }
     }
@@ -170,11 +170,11 @@ public class ALDataRequestView: UIView {
     
     /// This will show the loading view
     internal func showLoadingView(){
-        guard let dataSourceLoadingView = dataSource?.loadingViewForDataRequestView(self) else {
-            debugLog("No loading view provided!")
+        guard let dataSourceLoadingView = dataSource?.loadingViewForDataRequestView(dataRequestView: self) else {
+            debugLog(logString: "No loading view provided!")
             return
         }
-        hidden = false
+        isHidden = false
         loadingView = dataSourceLoadingView
         
         // Only add if not yet added
@@ -184,13 +184,13 @@ public class ALDataRequestView: UIView {
             layoutIfNeeded()
         }
         
-        dataSourceLoadingView.showWithDuration(dataSource?.showAnimationDurationForDataRequestView(self))
+        dataSourceLoadingView.showWithDuration(duration: dataSource?.showAnimationDurationForDataRequestView(dataRequestView: self))
     }
     
     /// This will show the reload view
-    internal func showReloadView(error: ErrorType? = nil){
-        guard let dataSourceReloadType = dataSource?.reloadViewControllerForDataRequestView(self) else {
-            debugLog("No reload view provided!")
+    internal func showReloadView(error: Error? = nil){
+        guard let dataSourceReloadType = dataSource?.reloadViewControllerForDataRequestView(dataRequestView: self) else {
+            debugLog(logString: "No reload view provided!")
             return
         }
         
@@ -202,38 +202,38 @@ public class ALDataRequestView: UIView {
         }
         
         guard let reloadView = reloadView else {
-            debugLog("Could not determine reloadView")
+            debugLog(logString: "Could not determine reloadView")
             return
         }
         
         var reloadReason: ReloadReason = .GeneralError
-        if let error = error as? NSError where error.isNetworkConnectionError() || reachability?.isReachable() == false {
+        if let error = error as? NSError, error.isNetworkConnectionError() || reachability?.isReachable == false {
             reloadReason = .NoInternetConnection
         }
         
-        hidden = false
+        isHidden = false
         addSubview(reloadView)
         reloadView.autoPinEdgesToSuperviewEdges()
-        dataSourceReloadType.setupForReloadType(ReloadType(reason: reloadReason, error: error))
-        dataSourceReloadType.retryButton.addTarget(self, action: "retryButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        dataSourceReloadType.setupForReloadType(reloadType: ReloadType(reason: reloadReason, error: error))
+        dataSourceReloadType.retryButton.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
         
-        reloadView.showWithDuration(dataSource?.showAnimationDurationForDataRequestView(self))
+        reloadView.showWithDuration(duration: dataSource?.showAnimationDurationForDataRequestView(dataRequestView: self))
     }
     
     /// This will show the empty view
     internal func showEmptyView(){
-        guard let dataSourceEmptyView = dataSource?.emptyViewForDataRequestView(self) else {
-            debugLog("No empty view provided!")
+        guard let dataSourceEmptyView = dataSource?.emptyViewForDataRequestView(dataRequestView: self) else {
+            debugLog(logString: "No empty view provided!")
             // Hide as we don't have anything to show from the empty view
-            hidden = true
+            isHidden = true
             return
         }
-        hidden = false
+        isHidden = false
         emptyView = dataSourceEmptyView
         addSubview(emptyView!)
         emptyView?.autoPinEdgesToSuperviewEdges()
         
-        dataSourceEmptyView.showWithDuration(dataSource?.showAnimationDurationForDataRequestView(self))
+        dataSourceEmptyView.showWithDuration(duration: dataSource?.showAnimationDurationForDataRequestView(dataRequestView: self))
     }
     
     /// IBAction for the retry button
@@ -242,13 +242,13 @@ public class ALDataRequestView: UIView {
     }
     
     /// This will trigger the retryAction if current state is failed
-    private func retryIfRetryable(){
+    fileprivate func retryIfRetryable(){
         guard state == RequestState.Failed else {
             return
         }
         
         guard let retryAction = retryAction else {
-            debugLog("No retry action provided")
+            debugLog(logString: "No retry action provided")
             return
         }
         
@@ -259,7 +259,7 @@ public class ALDataRequestView: UIView {
 /// On foreground Observer methods.
 private extension ALDataRequestView {
     func initOnForegroundObserver(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onForeground:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "onForeground:", name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     @objc private func onForeground(notification:NSNotification){
@@ -275,9 +275,9 @@ private extension ALDataRequestView {
     
     func initReachabilityMonitoring(){
         do {
-            reachability = try Reachability.reachabilityForInternetConnection()
+            reachability = try Reachability()
         } catch {
-            debugLog("Unable to create Reachability")
+            debugLog(logString: "Unable to create Reachability")
             return
         }
         
@@ -292,7 +292,7 @@ private extension ALDataRequestView {
         do {
             try reachability?.startNotifier()
         } catch {
-            debugLog("Unable to start notifier")
+            debugLog(logString: "Unable to start notifier")
         }
     }
 }
@@ -327,7 +327,7 @@ private extension UIView {
         }
         
         self.alpha = 0
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             self.alpha = 1
         })
     }
