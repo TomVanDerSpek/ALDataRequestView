@@ -65,6 +65,12 @@ it, simply add the following line to your Podfile:
 pod "ALDataRequestView"
 ```
 
+#### Swift version vs Pod version
+| Swift version | Pod version    |
+| ------------- | --------------- |
+| 3.X           | >= 2.0.0			|
+| 2.3           | 1.0.4			   |
+
 ## Author
 
 Antoine van der Lee, info@avanderlee.com
