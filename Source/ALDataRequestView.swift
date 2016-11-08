@@ -143,7 +143,7 @@ public class ALDataRequestView: UIView {
             default:
                 break
             }
-            })
+        })
     }
     
     // MARK: Private Methods
@@ -259,7 +259,7 @@ public class ALDataRequestView: UIView {
 /// On foreground Observer methods.
 private extension ALDataRequestView {
     func initOnForegroundObserver(){
-        NotificationCenter.default.addObserver(self, selector: "onForeground:", name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ALDataRequestView.onForeground), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     @objc private func onForeground(notification:NSNotification){
