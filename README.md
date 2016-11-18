@@ -16,7 +16,7 @@ A simple way to show:
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-### ReactiveCocoa & RxSwift
+### ReactiveSwift & RxSwift
 Simply call 
 
 ```swift
@@ -39,7 +39,7 @@ func emptyView(for dataRequestView: ALDataRequestView) -> UIView?
 let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
 rxDisposable = URLSession.shared.rx.data(request: request).attachToDataRequestView(dataRequestView: dataRequestView!).subscribe()
 ```
-##### ReactiveCocoa
+##### ReactiveSwift
 
 ```swift
 let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
