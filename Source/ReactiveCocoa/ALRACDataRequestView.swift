@@ -10,7 +10,7 @@ import UIKit
 import ReactiveSwift
 
 public extension SignalProducerProtocol {
-    func attachToDataRequestView(dataRequestView:ALDataRequestView) -> SignalProducer<Value, Error> {
+    func attachTo(dataRequestView:ALDataRequestView) -> SignalProducer<Value, Error> {
         let newSignalProducer = producer.observe(on: UIScheduler())
             .on(value: { [weak dataRequestView](object) in
                 if let emptyableObject = object as? Emptyable, emptyableObject.isEmpty == true {

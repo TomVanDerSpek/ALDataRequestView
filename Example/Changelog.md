@@ -11,6 +11,11 @@ func hideAnimationDuration(for dataRequestView: ALDataRequestView) -> Double
 func showAnimationDuration(for dataRequestView: ALDataRequestView) -> Double
 ```
 
+And the attach method:
+```swift
+.attachTo(dataRequestView: dataRequestView)
+```
+
 # 2.0.0
 Swift 3.0 compatible
 

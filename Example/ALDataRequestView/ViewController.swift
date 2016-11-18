@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     }
     
     func testWithEmptySignalProducer(){
-        signalProducer = SignalProducer(signal: signal).attachToDataRequestView(dataRequestView: dataRequestView!)
+        signalProducer = SignalProducer(signal: signal).attachTo(dataRequestView: dataRequestView!)
         signalProducer?.start()
         
         delay(delay: 3.0, closure: { [weak self] () -> Void in
@@ -61,13 +61,13 @@ class ViewController: UIViewController {
                 }
                 return SignalProducer(value: data)
             })
-            .attachToDataRequestView(dataRequestView: dataRequestView!)
+            .attachTo(dataRequestView: dataRequestView!)
         dataSignalProducer?.start()
     }
     
     func testWithFailureCallObservable(){
         let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
-        rxDisposable = URLSession.shared.rx.data(request: request).attachToDataRequestView(dataRequestView: dataRequestView!).subscribe()
+        rxDisposable = URLSession.shared.rx.data(request: request).attachTo(dataRequestView: dataRequestView!).subscribe()
     }
 
     @IBAction func setLoadingButtonTapped(sender: UIButton) {

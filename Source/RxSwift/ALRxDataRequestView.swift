@@ -11,7 +11,7 @@ import RxCocoa
 
 public extension ObservableType {
     
-    func attachToDataRequestView(dataRequestView:ALDataRequestView) -> Observable<E> {
+    func attachTo(dataRequestView:ALDataRequestView) -> Observable<E> {
         let resourceFactory: () throws -> BooleanDisposable = { () -> BooleanDisposable in
             return BooleanDisposable()
         }
