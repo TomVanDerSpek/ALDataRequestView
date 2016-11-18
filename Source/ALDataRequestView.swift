@@ -309,7 +309,7 @@ private extension NSError {
     func isNetworkConnectionError() -> Bool {
         let networkErrors = [NSURLErrorNetworkConnectionLost, NSURLErrorNotConnectedToInternet]
         
-        if self.domain == NSURLErrorDomain && networkErrors.contains(self.code) {
+        if domain == NSURLErrorDomain && networkErrors.contains(code) {
             return true
         }
         return false
@@ -321,11 +321,11 @@ private extension UIView {
     
     func showWithDuration(duration: Double?) {
         guard let duration = duration else {
-            self.alpha = 1
+            alpha = 1
             return
         }
         
-        self.alpha = 0
+        alpha = 0
         UIView.animate(withDuration: duration, animations: {
             self.alpha = 1
         })
