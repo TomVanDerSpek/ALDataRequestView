@@ -51,7 +51,7 @@ dataSignalProducer = URLSession.shared
         }
         return SignalProducer(value: data)
     })
-    .attachToDataRequestView(dataRequestView: dataRequestView!)
+    .attachTo(dataRequestView: dataRequestView!)
 
 ```
 
