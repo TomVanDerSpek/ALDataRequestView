@@ -42,7 +42,7 @@
 		607FACE51AFB9204008FA782 /* ALDataRequestView_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ALDataRequestView_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		731A70141D93C0B900167C19 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
+		730BB4D91DDF28CC0045BC4E /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Changelog.md; path = ../Changelog.md; sourceTree = "<group>"; };
 		8D4DEC4D03E89DA52F1E16A1 /* Pods_ALDataRequestView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALDataRequestView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA7DE3E03B0DBC1388150C78 /* Pods_ALDataRequestView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALDataRequestView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D726D31A2004B82535CF5003 /* Pods-ALDataRequestView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALDataRequestView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ALDataRequestView_Example/Pods-ALDataRequestView_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 			children = (
 				0F82ED4B049F765756F0380A /* ALDataRequestView.podspec */,
 				DCDCFD0A291F7478ECBBF07F /* README.md */,
-				731A70141D93C0B900167C19 /* Changelog.md */,
+				730BB4D91DDF28CC0045BC4E /* Changelog.md */,
 				42CC34EEB7DEE1AECA4ECE0F /* LICENSE */,
 			);
 			name = "Podspec Metadata";
