@@ -1,3 +1,9 @@
+# 2.1.0 
+Updated naming conventions to conform to Swift 3.0
+
+# 2.0.0
+Swift 3.0 compatible
+
 # 1.0.4
 - Fixed an issue hidden = false is not called on completion
 
