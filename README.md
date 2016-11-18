@@ -27,9 +27,9 @@ on your signalProducer or observable.
 Make sure you implement the `ALDataRequestViewDataSource`:
 
 ```swift
-func loadingViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
-func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType?
-func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView?
+func loadingView(for dataRequestView: ALDataRequestView) -> UIView?
+func reloadViewController(for dataRequestView: ALDataRequestView) -> ALDataReloadType?
+func emptyView(for dataRequestView: ALDataRequestView) -> UIView?
 ```
 
 #### Examples

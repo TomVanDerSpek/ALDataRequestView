@@ -1,6 +1,16 @@
 # 2.1.0 
 Updated naming conventions to conform to Swift 3.0
 
+Make sure you update your DataSource methods
+
+```swift
+func loadingView(for dataRequestView: ALDataRequestView) -> UIView?
+func reloadViewController(for dataRequestView: ALDataRequestView) -> ALDataReloadType?
+func emptyView(for dataRequestView: ALDataRequestView) -> UIView?
+func hideAnimationDuration(for dataRequestView: ALDataRequestView) -> Double
+func showAnimationDuration(for dataRequestView: ALDataRequestView) -> Double
+```
+
 # 2.0.0
 Swift 3.0 compatible
 
