@@ -71,15 +71,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func setLoadingButtonTapped(sender: UIButton) {
-        dataRequestView?.changeRequestState(state: RequestState.Loading)
+        dataRequestView?.changeRequestState(state: RequestState.loading)
     }
     
     @IBAction func setEmptyButtonTapped(sender: UIButton) {
-        dataRequestView?.changeRequestState(state: RequestState.Empty)
+        dataRequestView?.changeRequestState(state: RequestState.empty)
     }
     
     @IBAction func setReloadButtonTapped(sender: UIButton) {
-        dataRequestView?.changeRequestState(state: RequestState.Failed)
+        dataRequestView?.changeRequestState(state: RequestState.failed)
     }
     
     func delay(delay:Double, closure:@escaping ()->()) {
@@ -96,22 +96,22 @@ extension ViewController : ALDataRequestViewDataSource {
         return loadingView
     }
     
-    func reloadViewControllerForDataRequestView(dataRequestView: ALDataRequestView) -> ALDataReloadType? {
+    func reloadViewController(for dataRequestView: ALDataRequestView) -> ALDataReloadType? {
         let reloadVC = ReloadViewController()
         return reloadVC
     }
     
-    func emptyViewForDataRequestView(dataRequestView: ALDataRequestView) -> UIView? {
+    func emptyView(for dataRequestView: ALDataRequestView) -> UIView? {
         let emptyLabel = UILabel(forAutoLayout: ())
         emptyLabel.text = "Data is empty"
         return emptyLabel
     }
     
-    func hideAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double {
+    func hideAnimationDuration(for dataRequestView: ALDataRequestView) -> Double {
         return 0.25
     }
     
-    func showAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double {
+    func showAnimationDuration(for dataRequestView: ALDataRequestView) -> Double {
         return 0.25
     }
 }
@@ -139,11 +139,11 @@ final class ReloadViewController : UIViewController, ALDataReloadType {
         super.init(coder: aDecoder)
     }
     
-    func setupForReloadType(reloadType: ReloadType) {
+    func setup(for reloadType:ReloadType){ 
         switch reloadType.reason {
-        case .GeneralError:
+        case .generalError:
             statusLabel.text = "General error occured"
-        case .NoInternetConnection:
+        case .noInternetConnection:
             statusLabel.text = "Your internet connection is lost"
         }
     }

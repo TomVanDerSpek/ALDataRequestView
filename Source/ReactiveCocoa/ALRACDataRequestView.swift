@@ -14,18 +14,18 @@ public extension SignalProducerProtocol {
         let newSignalProducer = producer.observe(on: UIScheduler())
             .on(value: { [weak dataRequestView](object) in
                 if let emptyableObject = object as? Emptyable, emptyableObject.isEmpty == true {
-                    dataRequestView?.changeRequestState(state: .Empty)
+                    dataRequestView?.changeRequestState(state: .empty)
                 } else if let arrayObject = object as? NSArray, arrayObject.count == 0 {
-                    dataRequestView?.changeRequestState(state: .Empty)
+                    dataRequestView?.changeRequestState(state: .empty)
                 } else {
-                    dataRequestView?.changeRequestState(state: .Success)
+                    dataRequestView?.changeRequestState(state: .success)
                 }
             })
             .on(started: { [weak dataRequestView] () -> () in
-                dataRequestView?.changeRequestState(state: .Loading)
+                dataRequestView?.changeRequestState(state: .loading)
             })
             .on(failed: { [weak dataRequestView] (error) in
-                dataRequestView?.changeRequestState(state: .Failed, error: error)
+                dataRequestView?.changeRequestState(state: .failed, error: error)
             })
         
         dataRequestView.retryAction = { () -> Void in
