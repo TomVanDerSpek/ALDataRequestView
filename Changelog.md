@@ -1,3 +1,24 @@
+# 2.1.0 
+Updated naming conventions to conform to Swift 3.0
+
+Make sure you update your DataSource methods
+
+```swift
+func loadingView(for dataRequestView: ALDataRequestView) -> UIView?
+func reloadViewController(for dataRequestView: ALDataRequestView) -> ALDataReloadType?
+func emptyView(for dataRequestView: ALDataRequestView) -> UIView?
+func hideAnimationDuration(for dataRequestView: ALDataRequestView) -> Double
+func showAnimationDuration(for dataRequestView: ALDataRequestView) -> Double
+```
+
+And the attach method:
+```swift
+.attachTo(dataRequestView: dataRequestView)
+```
+
+# 2.0.0
+Swift 3.0 compatible
+
 # 1.0.4
 - Fixed an issue hidden = false is not called on completion
 
