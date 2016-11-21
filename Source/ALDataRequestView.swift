@@ -150,7 +150,7 @@ public class ALDataRequestView: UIView {
     
     /// This will remove all views added
     private func resetToPossibleState(completion: ((Bool) -> Void)?){
-        UIView.animate(withDuration: dataSource?.hideAnimationDurationForDataRequestView(dataRequestView: self) ?? 0, animations: { [weak self] in ()
+        UIView.animate(withDuration: dataSource?.hideAnimationDuration(for: self) ?? 0, animations: { [weak self] in ()
             self?.loadingView?.alpha = 0
             self?.emptyView?.alpha = 0
             self?.reloadView?.alpha = 0
@@ -184,7 +184,7 @@ public class ALDataRequestView: UIView {
             layoutIfNeeded()
         }
         
-        dataSourceLoadingView.showWithDuration(duration: dataSource?.showAnimationDurationForDataRequestView(dataRequestView: self))
+        dataSourceLoadingView.showWithDuration(duration: dataSource?.showAnimationDuration(for: self))
     }
     
     /// This will show the reload view
@@ -216,7 +216,7 @@ public class ALDataRequestView: UIView {
         dataSourceReloadType.setup(for: ReloadType(reason: reloadReason, error: error))
         dataSourceReloadType.retryButton.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
         
-        reloadView.showWithDuration(duration: dataSource?.showAnimationDurationForDataRequestView(dataRequestView: self))
+        reloadView.showWithDuration(duration: dataSource?.showAnimationDuration(for: self))
     }
     
     /// This will show the empty view
@@ -232,7 +232,7 @@ public class ALDataRequestView: UIView {
         addSubview(emptyView!)
         emptyView?.autoPinEdgesToSuperviewEdges()
         
-        dataSourceEmptyView.showWithDuration(duration: dataSource?.showAnimationDurationForDataRequestView(dataRequestView: self))
+        dataSourceEmptyView.showWithDuration(duration: dataSource?.showAnimationDuration(for: self))
     }
     
     /// IBAction for the retry button
