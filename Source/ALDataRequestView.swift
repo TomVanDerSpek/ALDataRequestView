@@ -57,8 +57,8 @@ public extension ALDataRequestViewDataSource {
     func loadingView(for dataRequestView: ALDataRequestView) -> UIView? { return nil }
     func reloadViewController(for dataRequestView: ALDataRequestView) -> ALDataReloadType? { return nil }
     func emptyView(for dataRequestView: ALDataRequestView) -> UIView? { return nil }
-    func hideAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double { return 0 }
-    func showAnimationDurationForDataRequestView(dataRequestView: ALDataRequestView) -> Double { return 0 }
+    func hideAnimationDuration(for dataRequestView: ALDataRequestView) -> Double { return 0 }
+    func showAnimationDuration(for dataRequestView: ALDataRequestView) -> Double { return 0 }
 }
 
 public class ALDataRequestView: UIView {
