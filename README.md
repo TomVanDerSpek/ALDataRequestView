@@ -20,7 +20,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 Simply call 
 
 ```swift
-attachToDataRequestView(dataRequestView)
+attachTo(dataRequestView: dataRequestView)
 ```
 on your signalProducer or observable. 
 
