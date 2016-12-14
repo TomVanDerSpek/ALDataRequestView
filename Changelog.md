@@ -1,3 +1,6 @@
+# 2.1.4
+- Using ReactiveSwift beta 4
+
 # 2.1.0 
 Updated naming conventions to conform to Swift 3.0
 
