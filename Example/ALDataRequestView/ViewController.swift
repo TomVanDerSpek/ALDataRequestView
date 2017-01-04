@@ -12,6 +12,7 @@ import PureLayout
 import RxSwift
 import ReactiveSwift
 import RxCocoa
+import Result
 
 class ViewController: UIViewController {
 
@@ -41,7 +42,7 @@ class ViewController: UIViewController {
     }
     
     func testWithEmptySignalProducer(){
-        signalProducer = SignalProducer(signal: signal).attachTo(dataRequestView: dataRequestView!)
+        signalProducer = SignalProducer(signal).attachTo(dataRequestView: dataRequestView!)
         signalProducer?.start()
         
         delay(delay: 3.0, closure: { [weak self] () -> Void in
@@ -55,6 +56,9 @@ class ViewController: UIViewController {
         let request = URLRequest(url: URL(string: "http://httpbin.org/status/400")!)
         dataSignalProducer = URLSession.shared
             .reactive.data(with: request)
+            .flatMapError({ (error) -> SignalProducer<(Data, URLResponse), NSError> in
+                return SignalProducer(error: error as NSError)
+            })
             .flatMap(.latest, transform: { (data, response) -> SignalProducer<Data, NSError> in
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode > 299 {
                     return SignalProducer(error: NSError(domain: "", code: httpResponse.statusCode, userInfo: nil))
