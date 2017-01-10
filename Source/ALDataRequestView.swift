@@ -35,7 +35,7 @@ public protocol Emptyable {
 }
 
 public protocol ALDataReloadType {
-    var retryButton:UIButton! { get set }
+    var retryButton:UIButton? { get set }
     func setup(for reloadType:ReloadType)
 }
 
@@ -194,10 +194,12 @@ public class ALDataRequestView: UIView {
             return
         }
         
-        if let dataSourceReloadView = dataSourceReloadType as? UIView {
-            reloadView = dataSourceReloadView
-        } else if let dataSourceReloadViewController = dataSourceReloadType as? UIViewController {
-            reloadView = dataSourceReloadViewController.view
+        if reloadView == nil {
+            if let dataSourceReloadView = dataSourceReloadType as? UIView {
+                reloadView = dataSourceReloadView
+            } else if let dataSourceReloadViewController = dataSourceReloadType as? UIViewController {
+                reloadView = dataSourceReloadViewController.view
+            }
         }
         
         guard let reloadView = reloadView else {
@@ -214,7 +216,7 @@ public class ALDataRequestView: UIView {
         addSubview(reloadView)
         reloadView.autoPinEdgesToSuperviewEdges()
         dataSourceReloadType.setup(for: ReloadType(reason: reloadReason, error: error))
-        dataSourceReloadType.retryButton.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
+        dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
         
         reloadView.showWithDuration(duration: dataSource?.showAnimationDuration(for: self))
     }

@@ -122,21 +122,21 @@ extension ViewController : ALDataRequestViewDataSource {
 
 final class ReloadViewController : UIViewController, ALDataReloadType {
     
-    var retryButton:UIButton!
+    var retryButton:UIButton?
     var statusLabel:UILabel!
     
     init(){
         super.init(nibName: nil, bundle: nil)
         
         retryButton = UIButton(type: UIButtonType.system)
-        retryButton.setTitle("Reload!", for: UIControlState.normal)
-        view.addSubview(retryButton)
-        retryButton.autoCenterInSuperview()
+        retryButton?.setTitle("Reload!", for: UIControlState.normal)
+        view.addSubview(retryButton!)
+        retryButton?.autoCenterInSuperview()
         
         statusLabel = UILabel(forAutoLayout: ())
         view.addSubview(statusLabel)
         statusLabel.autoAlignAxis(toSuperviewAxis: ALAxis.vertical)
-        statusLabel.autoPinEdge(.bottom, to: .top, of: retryButton)
+        statusLabel.autoPinEdge(.bottom, to: .top, of: retryButton!)
     }
     
     required init?(coder aDecoder: NSCoder) {

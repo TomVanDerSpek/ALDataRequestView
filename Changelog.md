@@ -1,3 +1,6 @@
+# 2.2.2
+- Fixed crash when retrying many times after each other
+
 # 2.2.1
 - Using RxSwift 3.1 with Moya 8
 
