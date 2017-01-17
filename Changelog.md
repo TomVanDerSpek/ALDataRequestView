@@ -1,3 +1,6 @@
+# 2.2.3
+- Fixed crash when retrying
+
 # 2.2.2
 - Fixed crash when retrying many times after each other
 

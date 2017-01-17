@@ -194,12 +194,10 @@ public class ALDataRequestView: UIView {
             return
         }
         
-        if reloadView == nil {
-            if let dataSourceReloadView = dataSourceReloadType as? UIView {
-                reloadView = dataSourceReloadView
-            } else if let dataSourceReloadViewController = dataSourceReloadType as? UIViewController {
-                reloadView = dataSourceReloadViewController.view
-            }
+        if let dataSourceReloadView = dataSourceReloadType as? UIView {
+            reloadView = dataSourceReloadView
+        } else if let dataSourceReloadViewController = dataSourceReloadType as? UIViewController {
+            reloadView = dataSourceReloadViewController.view
         }
         
         guard let reloadView = reloadView else {
