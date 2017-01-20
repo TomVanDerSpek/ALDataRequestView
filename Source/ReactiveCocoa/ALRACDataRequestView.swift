@@ -21,7 +21,7 @@ public extension SignalProducerProtocol {
                     dataRequestView?.changeRequestState(state: .success)
                 }
             })
-            .on(started: { [weak dataRequestView] () -> () in
+            .on(starting: { [weak dataRequestView] () -> () in
                 dataRequestView?.changeRequestState(state: .loading)
             })
             .on(failed: { [weak dataRequestView] (error) in
