@@ -1,3 +1,6 @@
+# 2.2.4
+- Fixed started issue
+
 # 2.2.3
 - Fixed crash when retrying
 
