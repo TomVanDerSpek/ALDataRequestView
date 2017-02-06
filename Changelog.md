@@ -1,3 +1,6 @@
+# 2.3.0
+- tvOS support
+
 # 2.2.4
 - Fixed started issue
 

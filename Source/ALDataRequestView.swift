@@ -214,7 +214,12 @@ public class ALDataRequestView: UIView {
         addSubview(reloadView)
         reloadView.autoPinEdgesToSuperviewEdges()
         dataSourceReloadType.setup(for: ReloadType(reason: reloadReason, error: error))
-        dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
+        
+        #if os(tvos)
+            dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
+        #else
+            dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.primaryActionTriggered)
+        #endif
         
         reloadView.showWithDuration(duration: dataSource?.showAnimationDuration(for: self))
     }
