@@ -216,9 +216,11 @@ public class ALDataRequestView: UIView {
         dataSourceReloadType.setup(for: ReloadType(reason: reloadReason, error: error))
         
         #if os(tvos)
-            dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
+            if #available(iOS 9.0, *) {
+                dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.primaryActionTriggered)
+            }
         #else
-            dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.primaryActionTriggered)
+            dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.touchUpInside)
         #endif
         
         reloadView.showWithDuration(duration: dataSource?.showAnimationDuration(for: self))
