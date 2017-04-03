@@ -215,7 +215,7 @@ public class ALDataRequestView: UIView {
         reloadView.autoPinEdgesToSuperviewEdges()
         dataSourceReloadType.setup(for: ReloadType(reason: reloadReason, error: error))
         
-        #if os(tvos)
+        #if os(tvOS)
             if #available(iOS 9.0, *) {
                 dataSourceReloadType.retryButton?.addTarget(self, action: #selector(ALDataRequestView.retryButtonTapped), for: UIControlEvents.primaryActionTriggered)
             }

@@ -1,3 +1,6 @@
+# 2.3.1
+- Fixed tvOS support
+
 # 2.3.0
 - tvOS support
 
