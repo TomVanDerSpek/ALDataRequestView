@@ -206,7 +206,7 @@ public class ALDataRequestView: UIView {
         }
         
         var reloadReason: ReloadReason = .generalError
-        if let error = error as? NSError, error.isNetworkConnectionError() || reachability?.isReachable == false {
+        if let error = error as NSError?, error.isNetworkConnectionError() || reachability?.isReachable == false {
             reloadReason = .noInternetConnection
         }
         
@@ -279,13 +279,8 @@ private extension ALDataRequestView {
 /// Reachability methods
 private extension ALDataRequestView {
     
-    func initReachabilityMonitoring(){
-        do {
-            reachability = try Reachability()
-        } catch {
-            debugLog(logString: "Unable to create Reachability")
-            return
-        }
+    func initReachabilityMonitoring() {
+        reachability = Reachability()
         
         reachability?.whenReachable = { [weak self] reachability in
             guard self?.automaticallyRetryWhenReachable == true else {

@@ -36,7 +36,7 @@ public extension ObservableType {
 
         dataRequestView.retryAction = { [weak dataRequestView] () -> Void in
             if let dataRequestView = dataRequestView {
-                observable.takeUntil(dataRequestView.rx.deallocated).subscribe()
+                _ = observable.takeUntil(dataRequestView.rx.deallocated).subscribe()
             }
         }
         

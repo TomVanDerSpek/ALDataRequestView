@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "ALDataRequestView"
-    s.version          = "2.3.1"
+    s.version          = "2.3.2"
     s.summary          = "A view representation for data requests. Support for ReactiveCocoa and RXSwift."
     s.description      = "A view representation for data requests. Support for ReactiveCocoa and RXSwift by attached it to signalproducers and observables."
     s.homepage         = "https://github.com/AvdLee/ALDataRequestView"
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
     s.subspec "Core" do |ss|
         ss.source_files  = "Source/*.swift"
         ss.dependency "PureLayout"
-        ss.dependency "ReachabilitySwift", "~> 3"
+        ss.dependency "ReachabilitySwift"
         ss.framework  = "Foundation"
     end
 

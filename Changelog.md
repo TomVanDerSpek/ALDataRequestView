@@ -1,3 +1,6 @@
+# 2.3.2
+- Fixed Swift 3.1 warnings
+
 # 2.3.1
 - Fixed tvOS support
 
