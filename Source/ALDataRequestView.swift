@@ -156,6 +156,9 @@ public class ALDataRequestView: UIView {
             self?.reloadView?.alpha = 0
         }) { [weak self] (completed) in
             self?.resetViews(views: [self?.loadingView, self?.emptyView, self?.reloadView])
+            self?.loadingView = nil
+            self?.emptyView = nil
+            self?.reloadView = nil
             self?.isHidden = true
             completion?(completed)
         }
